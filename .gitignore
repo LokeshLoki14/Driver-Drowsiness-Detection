@@ -1,46 +1,24 @@
-# Maven build files
+# Java and Maven
 target/
-
-# Compiled Java files
 *.class
 
-# Log files
-*.log
-logs/
-
-# Eclipse IDE
+# Eclipse
 .settings/
 .classpath
 .project
-.springBeans
-.sts4-cache/
 
-# IntelliJ IDEA
-.idea/
-*.iml
+# Logs
+*.log
 
-# VS Code
-.vscode/
-
-# Environment files and secrets
+# Secrets
 .env
 .env.*
-!.env.example
 
-# Local application configuration
-application-local.properties
-application-secret.properties
-
-# OpenCV landmark model - large file
+# Large OpenCV model files
 /models/lbfmodel.yaml
 /src/main/resources/models/lbfmodel.yaml
 
-# Node.js dependencies, if a separate React frontend exists
+# React dependencies
 node_modules/
 frontend/node_modules/
-frontend/dist/
-
-# Operating system files
-.DS_Store
-Thumbs.db
-desktop.ini
+frontend/dist/rd

@@ -1,439 +1,317 @@
-\# Real-Time Driver Drowsiness Detection and Alert System
+# 🚗 Real-Time Driver Drowsiness Detection and Alert System
 
+A Java Full Stack application designed to monitor driver alertness using computer vision. The system analyzes facial features, including eye closure and mouth opening, to identify potential signs of drowsiness and generate alerts through an interactive dashboard.
 
+## 📌 Project Overview
 
-A Java full-stack web application that watches a driver through a webcam and raises an alert when it detects \*\*prolonged eye closure\*\* or \*\*yawning\*\*. It is a Java rebuild of an academic project that was originally written in Python with OpenCV and Dlib.
+Driver fatigue can reduce concentration and reaction time, increasing the risk of road accidents. This project aims to help identify potential drowsiness by analyzing facial features captured through a webcam.
 
+The application combines a Java and Spring Boot backend, OpenCV-based image processing, a MySQL database, and a web dashboard to provide driver monitoring and detection history.
 
+## ✨ Features
 
-!\[Dashboard](docs/dashboard.png)
+* **Real-Time Camera Monitoring:** Capture webcam frames for driver monitoring.
+* **Face Detection:** Identify the driver's face using an OpenCV Haar Cascade model.
+* **Facial Landmark Detection:** Locate important facial points for eye and mouth analysis.
+* **Eye Closure Detection:** Use the Eye Aspect Ratio (EAR) to analyze eye closure.
+* **Yawning Detection:** Use the Mouth Aspect Ratio (MAR) to analyze mouth opening.
+* **Drowsiness Alerts:** Generate visual and audible warnings when configured detection conditions are met.
+* **Interactive Dashboard:** Display monitoring status, camera status, detection metrics, and event statistics.
+* **Detection History:** View previously recorded drowsiness events.
+* **Database Integration:** Store detection sessions and events in MySQL.
+* **Unit Testing:** Test the drowsiness detection logic using JUnit.
 
+> **Note:** This is a driver-assistance prototype, not a replacement for safe driving practices or certified vehicle safety systems.
 
+## 🛠️ Technologies Used
 
-\## How it works
+| Technology            | Purpose                                 |
+| --------------------- | --------------------------------------- |
+| Java 21               | Backend programming                     |
+| Spring Boot 3.4.5     | Backend application and REST APIs       |
+| Spring Web            | HTTP endpoints and web integration      |
+| Spring Data JPA       | Database persistence                    |
+| MySQL                 | Store detection events and sessions     |
+| Java OpenCV           | Image processing and computer vision    |
+| HTML, CSS, JavaScript | Web dashboard and browser interactions  |
+| Maven                 | Dependency management and project build |
+| JUnit                 | Unit testing                            |
+| Postman               | REST API testing                        |
 
+The frontend technology should match the implementation included in this repository. If the dashboard uses a separate React application, include React.js in the frontend stack and document its build process.
 
+## 🏗️ System Architecture
 
-1\. The webcam frame is captured with OpenCV (JavaCV).
-
-2\. A Haar cascade detects the face.
-
-3\. A 68-point facial landmark model (FacemarkLBF) locates the eyes and mouth.
-
-4\. \*\*EAR\*\* (Eye Aspect Ratio) measures eye closure and \*\*MAR\*\* (Mouth Aspect Ratio) measures yawning.
-
-5\. If EAR stays below its threshold, or MAR stays above its threshold, for \*\*18 consecutive frames\*\*, the driver is marked \*\*DROWSY\*\*. Normal blinks are ignored.
-
-6\. The dashboard shows live video, a warning banner and an alarm beep. Each drowsiness episode is saved once to MySQL.
-
-
-
+```text
+                 Webcam
+                    |
+                    v
+             Java + OpenCV
+                    |
+                    v
+              Face Detection
+                    |
+                    v
+        Facial Landmark Detection
+                    |
+             +------+------+
+             |             |
+             v             v
+        Eye Analysis   Mouth Analysis
+             |             |
+             v             v
+            EAR           MAR
+             |             |
+             +------+------+
+                    |
+                    v
+         Drowsiness Detection
+                    |
+                    v
+             Alert Service
+                    |
+                    v
+           Spring Boot APIs
+                    |
+             +------+------+
+             |             |
+             v             v
+           MySQL       Web Dashboard
 ```
 
-Webcam -> OpenCV -> Face Detection -> 68 Landmarks -> EAR + MAR
+## ⚙️ How It Works
 
-&#x20;      -> Drowsiness Decision -> Spring Boot -> MySQL -> HTML/CSS/JS Dashboard
+1. The webcam captures video frames of the driver.
+2. OpenCV processes the frames and detects the driver's face.
+3. A facial landmark model identifies key points around the eyes and mouth.
+4. The application calculates the Eye Aspect Ratio (EAR) and Mouth Aspect Ratio (MAR).
+5. The detection logic evaluates these values against configured thresholds and frame-count conditions.
+6. When a configured drowsiness condition is detected, the application generates an alert.
+7. The backend records detection events and sessions in MySQL when the corresponding persistence functionality is enabled.
+8. The dashboard displays the monitoring state and available detection information.
 
+## 📁 Project Structure
+
+```text
+driver-drowsiness-detection/
+├── pom.xml
+├── README.md
+├── .gitignore
+├── download-models.bat
+├── models/
+│   ├── haarcascade_frontalface_default.xml
+│   └── lbfmodel.yaml
+├── sql/
+│   └── schema.sql
+├── docs/
+└── src/
+    ├── main/
+    │   ├── java/com/drowsiness/
+    │   │   ├── DrowsinessApplication.java
+    │   │   ├── config/
+    │   │   ├── camera/
+    │   │   ├── vision/
+    │   │   ├── detection/
+    │   │   ├── alert/
+    │   │   ├── controller/
+    │   │   ├── entity/
+    │   │   └── repository/
+    │   └── resources/
+    │       ├── application.properties
+    │       └── static/
+    └── test/
+        └── java/com/drowsiness/
 ```
 
+The exact files may vary depending on the current project version.
 
+## 📋 Prerequisites
 
-\*\*Formulas\*\*
+Install the following software before running the project:
 
+* Java Development Kit (JDK) 21
+* Eclipse IDE with Maven support
+* MySQL Server
+* Git (optional, for version control)
+* Postman (optional, for API testing)
 
+## 🚀 Getting Started
 
+### 1. Download or Clone the Repository
+
+Clone the repository:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/driver-drowsiness-detection.git
 ```
 
-EAR = ( |p1-p5| + |p2-p4| ) / ( 2 \* |p0-p3| )          per eye, then averaged
+Move into the project directory:
 
-MAR = ( |61-67| + |62-66| + |63-65| ) / |60-64|
-
-```
-
-
-
-\## Screenshots
-
-
-
-| Dashboard | Eye closure alert |
-
-|---|---|
-
-| !\[Dashboard](docs/dashboard.png) | !\[Eye closure](docs/eye-closure.png) |
-
-
-
-| Yawning alert | Event history |
-
-|---|---|
-
-| !\[Yawning](docs/yawning.png) | !\[History](docs/history.png) |
-
-
-
-\## Features
-
-
-
-\- Live webcam video with face box and eye/mouth landmark points
-
-\- Three separate alerts: \*\*Eye closure\*\*, \*\*Yawning\*\* and \*\*Drowsiness\*\* (both together)
-
-\- Frame-based decision logic that ignores normal blinks
-
-\- Short face-loss tolerance, so a wide yawn does not reset detection
-
-\- Modern dark dashboard: sidebar, stat cards, live EAR/MAR gauges, frame progress bars and live trend chart
-
-\- Visual alert banner, screen glow and audible alarm (can be muted)
-
-\- History page backed by MySQL with filters and analytics charts
-
-\- Server and camera status indicators
-
-\- REST API for control, status and events
-
-\- JUnit tests for the decision logic
-
-
-
-\## Tech stack
-
-
-
-| Layer | Technology |
-
-|---|---|
-
-| Frontend | HTML, CSS, JavaScript |
-
-| Backend | Java 17+, Spring Boot, Spring Data JPA |
-
-| Database | MySQL 8 |
-
-| Computer vision | OpenCV via JavaCV (`org.bytedeco`) |
-
-| Build tool | Maven |
-
-
-
-\## Project structure
-
-
-
-```
-
-src/main/java/com/drowsiness/
-
-&#x20; DrowsinessApplication.java   Application entry point
-
-&#x20; alert/        AlertService               Saves sessions and one event per alarm
-
-&#x20; camera/       CameraService              Opens the webcam and reads frames
-
-&#x20; config/       DetectionProperties        Thresholds and model paths
-
-&#x20; controller/   DetectionController        Start, stop, status
-
-&#x20;               VideoStreamController      Live MJPEG stream
-
-&#x20;               EventController            Saved events
-
-&#x20; detection/    DetectionLoop              Background thread running the pipeline
-
-&#x20;               DrowsinessDetector         Decision rules (18-frame logic)
-
-&#x20;               DetectionResult, DriverState
-
-&#x20; entity/       DetectionSession, DrowsinessEvent
-
-&#x20; repository/   Spring Data JPA repositories
-
-&#x20; vision/       FaceDetectorService, LandmarkDetectorService,
-
-&#x20;               EyeAnalyzer (EAR), MouthAnalyzer (MAR)
-
-
-
-src/main/resources/
-
-&#x20; application.properties
-
-&#x20; static/       index.html, css/style.css, js/app.js   (dashboard)
-
-
-
-models/         OpenCV model files (downloaded, see Setup)
-
-sql/schema.sql  Optional manual database script
-
-```
-
-
-
-\## Setup
-
-
-
-\### Requirements
-
-
-
-\- JDK 17 or higher
-
-\- Maven (or use Eclipse / IntelliJ)
-
-\- MySQL 8 running locally
-
-\- A webcam
-
-
-
-\### 1. Clone
-
-
-
-```
-
-git clone https://github.com/<LokeshLoki14>/driver-drowsiness-detection.git
-
+```bash
 cd driver-drowsiness-detection
-
 ```
 
+Replace `YOUR_USERNAME` with your GitHub username.
 
+Alternatively, download the repository as a ZIP file and extract it.
 
-\### 2. Download the model files
+### 2. Download the OpenCV Model Files
 
+The project requires two model files.
 
+**Face detection model**
 
-The landmark model is about 54 MB, so it is not stored in this repository.
+Download:
 
+https://raw.githubusercontent.com/opencv/opencv/4.x/data/haarcascades/haarcascade_frontalface_default.xml
 
+Save it as:
 
-On Windows, run this from the project root:
-
-
-
+```text
+models/haarcascade_frontalface_default.xml
 ```
 
-download-models.bat
+**Facial landmark model**
 
+Download:
+
+https://raw.githubusercontent.com/kurnianggoro/GSOC2017/master/data/lbfmodel.yaml
+
+Save it as:
+
+```text
+models/lbfmodel.yaml
 ```
 
+The landmark model is a large file. Download the actual file rather than creating an empty YAML file or copying only part of its contents.
 
+Confirm that the model paths in `application.properties` match the locations expected by the Java implementation.
 
-Or download them manually into a `models` folder in the project root:
+### 3. Configure MySQL
 
+Start MySQL Server and create the database:
 
-
-\- `haarcascade\_frontalface\_default.xml`
-
-&#x20; https://raw.githubusercontent.com/opencv/opencv/4.x/data/haarcascades/haarcascade\_frontalface\_default.xml
-
-\- `lbfmodel.yaml`
-
-&#x20; https://raw.githubusercontent.com/kurnianggoro/GSOC2017/master/data/lbfmodel.yaml
-
-
-
-\### 3. Configure the database
-
-
-
-The app creates `drowsiness\_db` and its tables automatically. Provide your MySQL credentials as environment variables:
-
-
-
+```sql
+CREATE DATABASE drowsiness_db;
 ```
 
-set DB\_USERNAME=your_name
+Open:
 
-set DB\_PASSWORD=your_password
-
+```text
+src/main/resources/application.properties
 ```
 
+Configure the database connection using your own local MySQL credentials.
 
+Example:
 
-(Linux / macOS: use `export` instead of `set`.)
-
-
-
-\### 4. Run
-
-
-
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/drowsiness_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+spring.datasource.username=${DB_USERNAME:root}
+spring.datasource.password=${DB_PASSWORD}
 ```
 
-mvn spring-boot:run
+Set `DB_PASSWORD` to your local MySQL password before starting the application. Do not publish database credentials in a public repository.
 
+If the project uses a different database configuration, retain the settings required by your current implementation.
+
+### 4. Import the Project into Eclipse
+
+1. Open Eclipse IDE.
+2. Select **File → Import**.
+3. Select **Maven → Existing Maven Projects**.
+4. Browse to the directory containing `pom.xml`.
+5. Select the project and click **Finish**.
+6. Allow Maven to download the dependencies.
+
+After importing, right-click the project and select:
+
+**Maven → Update Project → OK**
+
+### 5. Run the Application
+
+Locate:
+
+```text
+src/main/java/com/drowsiness/DrowsinessApplication.java
 ```
 
+Right-click the file and choose:
 
+**Run As → Java Application**
 
-Or in Eclipse: right-click `DrowsinessApplication.java` -> Run As -> Java Application.
+Alternatively, use **Run As → Spring Boot App** if available.
 
+Check the Eclipse Console for a successful startup message.
 
+Open the application using the port configured in `application.properties`. For example:
 
-Open http://localhost:8081 
-
-
-
-Close other apps that use the webcam before starting. The first Maven build downloads the OpenCV native libraries, so it can take several minutes.
-
-
-
-\## Usage
-
-
-
-1\. Open the dashboard and click \*\*Start detection\*\*.
-
-2\. Close your eyes for 1 to 2 seconds to trigger an \*\*Eye closure\*\* alert.
-
-3\. Open your mouth wide for 1 to 2 seconds to trigger a \*\*Yawning\*\* alert.
-
-4\. Do both together to trigger a \*\*Drowsiness\*\* alert.
-
-5\. Open the \*\*History\*\* page to see saved events, filters and analytics.
-
-6\. Click \*\*Stop detection\*\* when finished.
-
-
-
-\## Configuration
-
-
-
-Set in `src/main/resources/application.properties`:
-
-
-
-| Property | Default | Meaning |
-
-|---|---|---|
-
-| `detection.ear-threshold` | 0.25 | EAR below this means eyes closed |
-
-| `detection.mar-threshold` | 0.70 | MAR above this means yawning |
-
-| `detection.frame-threshold` | 18 | Consecutive frames needed to trigger an alert |
-
-| `detection.camera-index` | 0 | Webcam index |
-
-| `server.port` | 8081 | Web server port |
-
-
-
-Thresholds may need tuning for your camera, lighting and face.
-
-
-
-\## REST API
-
-
-
-| Method | Endpoint | Description |
-
-|---|---|---|
-
-| POST | `/api/detection/start` | Start camera and detection |
-
-| POST | `/api/detection/stop` | Stop detection |
-
-| GET | `/api/status` | State, EAR, MAR, frame counters and thresholds |
-
-| GET | `/api/video/stream` | Live MJPEG video |
-
-| GET | `/api/events` | Saved drowsiness events (newest first) |
-
-
-
-\## Database
-
-
-
-| Table | Columns |
-
-|---|---|
-
-| `detection\_session` | id, started\_at, ended\_at |
-
-| `drowsiness\_event` | id, session\_id, event\_type, ear\_value, mar\_value, detected\_at |
-
-
-
-`event\_type` is one of `EYE\_CLOSURE`, `YAWNING` or `DROWSINESS`.
-
-
-
-\## Tests
-
-
-
+```text
+http://localhost:8081
 ```
 
-mvn test
+Use `8080` instead if that is the configured server port.
 
+## 🧪 Testing
+
+The project includes unit tests for the detection logic.
+
+To run tests in Eclipse:
+
+1. Open `src/test/java`.
+2. Locate the relevant test class.
+3. Right-click the test class.
+4. Select **Run As → JUnit Test**.
+
+Verify the following scenarios where implemented:
+
+* Normal eye and mouth measurements
+* Prolonged eye closure
+* Yawning detection
+* Resetting counters after a normal blink
+* Face not detected
+* Camera unavailable
+* Database connection failure
+* REST API errors
+
+Postman can also be used to test the REST endpoints defined by the project's controllers.
+
+## 🔧 Configuration
+
+Detection parameters are configured through `application.properties`.
+
+Example:
+
+```properties
+detection.camera-index=0
+detection.ear-threshold=0.25
+detection.mar-threshold=1.10
+detection.frame-threshold=18
+detection.face-model-path=models/haarcascade_frontalface_default.xml
+detection.landmark-model-path=models/lbfmodel.yaml
 ```
 
+These are example project settings. Adjust thresholds and model paths according to the actual implementation and test results.
 
+## 🔮 Future Enhancements
 
-\## Troubleshooting
+* Improve detection accuracy under different lighting conditions.
+* Add additional alert mechanisms.
+* Improve robustness when glasses or other obstructions are present.
+* Add configurable detection thresholds through the dashboard.
+* Enhance event reporting and monitoring analytics.
+* Optimize computer vision performance for real-time processing.
+* Explore secure cloud-based event reporting.
 
+## 👨‍💻 Developer
 
+**Lokesh R**
+Computer Science and Engineering
 
-| Problem | Fix |
+GitHub: https://github.com/YOUR_USERNAME
 
-|---|---|
+LinkedIn: Add your LinkedIn profile URL here.
 
-| `Face model not found` | Run `download-models.bat` and check the `models/` folder |
+## 📄 License
 
-| `Public Key Retrieval is not allowed` | Keep `allowPublicKeyRetrieval=true` in the datasource URL |
-
-| Black camera image | Close other apps using the webcam, then restart |
-
-| Dashboard shows no styling | Hard refresh with Ctrl+F5, or clean and restart the project |
-
-| Yawn not detected | Lower `detection.mar-threshold` slightly |
-
-
-
-\## Limitations
-
-
-
-\- OpenCV reads the webcam on the machine running the server, so run the application locally.
-
-\- Landmarks come from OpenCV's LBF model, which is less precise than Dlib, so thresholds may need tuning.
-
-\- Detection is affected by low light, sunglasses, partial face coverage and camera angle.
-
-\- The CNN eye/mouth classifiers from the original Python project are not included. This version uses EAR and MAR only.
-
-
-
-\## Future improvements
-
-
-
-\- Save a snapshot image for every alert
-
-\- Login and per-driver reports
-
-\- Adjustable thresholds from the dashboard
-
-\- Deployment with a remote camera stream
-
-
-
-\## Acknowledgements
-
-
-
-Based on the Eye Aspect Ratio method of Soukupova and Cech, "Real-Time Eye Blink Detection using Facial Landmarks".
-
-#   D r i v e r - D r o w s i n e s s - D e t e c t i o n  
- #   D r i v e r - D r o w s i n e s s - D e t e c t i o n  
- 
+Choose and add an appropriate open-source license before distributing the project publicly. Check the licenses and attribution requirements of any third-party model files and libraries included with the application.
