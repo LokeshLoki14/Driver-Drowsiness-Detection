@@ -1,9 +1,46 @@
-   target/
-   bin/
-   .classpath
-   .project
-   .settings/
-   *.log
-   *.class
-   models/lbfmodel.yaml
-   captures/
+# Maven build files
+target/
+
+# Compiled Java files
+*.class
+
+# Log files
+*.log
+logs/
+
+# Eclipse IDE
+.settings/
+.classpath
+.project
+.springBeans
+.sts4-cache/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Local application configuration
+application-local.properties
+application-secret.properties
+
+# OpenCV landmark model - large file
+/models/lbfmodel.yaml
+/src/main/resources/models/lbfmodel.yaml
+
+# Node.js dependencies, if a separate React frontend exists
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
