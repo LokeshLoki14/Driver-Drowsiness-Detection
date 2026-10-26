@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness History</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Driver Drowsiness Detection</h1>
+        <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="history.html" class="active">History</a>
+        </nav>
+    </header>
+
+    <main class="history-layout">
+        <section class="card">
+            <div class="history-top">
+                <h2>Drowsiness Events</h2>
+                <button id="refreshBtn" class="btn start">Refresh</button>
+            </div>
+
+            <div class="system-row">
+                <div class="system-item">
+                    <span class="label">Total events</span>
+                    <span id="totalCount" class="system-value">0</span>
+                </div>
+                <div class="system-item">
+                    <span class="label">Eye closure</span>
+                    <span id="eyeCount" class="system-value">0</span>
+                </div>
+                <div class="system-item">
+                    <span class="label">Yawning</span>
+                    <span id="yawnCount" class="system-value">0</span>
+                </div>
+            </div>
+
+            <p id="summary" class="message"></p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>EAR</th>
+                            <th>MAR</th>
+                            <th>Detected At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsBody"></tbody>
+                </table>
+            </div>
+
+            <p id="lastUpdated" class="message"></p>
+        </section>
+    </main>
+
+    <footer>
+        Real-Time Driver Drowsiness Detection and Alert System
+    </footer>
+
+    <script src="js/history.js"></script>
+</body>
+</html>

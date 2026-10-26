@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Dashboard · Driver Drowsiness Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+        <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+        <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+        <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+        <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></symbol>
+        <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></symbol>
+        <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></symbol>
+        <symbol id="i-mouth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="15.5" rx="3" ry="3.5"/><path d="M8.5 9h.01"/><path d="M15.5 9h.01"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+        <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></symbol>
+        <symbol id="i-chevrons-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+        <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+        <symbol id="i-square" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" rx="2"/></symbol>
+        <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+        <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></symbol>
+        <symbol id="i-volume-x" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></symbol>
+        <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></symbol>
+        <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+        <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></symbol>
+        <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+    </defs>
+</svg>
+
+<div id="app" class="app" data-alarm="false">
+
+    <div id="backdrop" class="backdrop" hidden></div>
+
+    <aside id="sidebar" class="sidebar" aria-label="Sidebar">
+        <div class="brand">
+            <div class="brand-logo"><svg class="icon"><use href="#i-shield"/></svg></div>
+            <div class="brand-text">
+                <strong>Drowsiness Detection</strong>
+                <span>Driver monitoring</span>
+            </div>
+        </div>
+
+        <nav class="nav" aria-label="Main">
+            <a href="#dashboard" class="nav-item" data-view="dashboard" title="Dashboard">
+                <svg class="icon"><use href="#i-dashboard"/></svg><span class="nav-label">Dashboard</span>
+            </a>
+            <a href="#history" class="nav-item" data-view="history" title="History">
+                <svg class="icon"><use href="#i-history"/></svg><span class="nav-label">History</span>
+            </a>
+            <a href="#live" class="nav-item" data-view="live" title="Live stream">
+                <svg class="icon"><use href="#i-video"/></svg><span class="nav-label">Live stream</span>
+            </a>
+            <a href="#settings" class="nav-item" data-view="settings" title="Settings">
+                <svg class="icon"><use href="#i-sliders"/></svg><span class="nav-label">Settings</span>
+            </a>
+        </nav>
+
+        <button id="collapseBtn" class="nav-item nav-collapse" type="button" aria-expanded="true" title="Collapse sidebar">
+            <svg class="icon"><use href="#i-chevrons-left"/></svg><span class="nav-label">Collapse</span>
+        </button>
+    </aside>
+
+    <div class="main" id="mainCol">
+        <header class="topbar">
+            <button id="menuBtn" class="icon-btn menu-btn" type="button" aria-label="Open menu">
+                <svg class="icon"><use href="#i-menu"/></svg>
+            </button>
+            <div class="page-title">
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="pageSub">Live driver monitoring overview</p>
+            </div>
+            <div class="topbar-right">
+                <span id="serverPill" class="pill" data-tone="idle"><span class="dot"></span><span id="serverStatus">Connecting</span></span>
+                <span id="cameraPill" class="pill" data-tone="idle"><span class="dot"></span><span id="cameraStatus">Camera off</span></span>
+                <button id="soundBtn" class="icon-btn" type="button" aria-pressed="true" title="Alarm sound on">
+                    <svg class="icon"><use id="soundIcon" href="#i-volume"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <div id="alertBanner" class="alert-banner" role="alert" hidden>
+            <svg class="icon"><use href="#i-alert"/></svg>
+            <span id="alertBannerText"></span>
+        </div>
+
+        <main id="content" class="content">
+
+            <!-- Dashboard -->
+            <section id="view-dashboard" class="view">
+                <div class="stats">
+                    <article class="stat" style="--tone: 56,189,248">
+                        <div class="stat-icon"><svg class="icon"><use href="#i-database"/></svg></div>
+                        <div class="stat-body">
+                            <p class="stat-label">Total events</p>
+                            <p class="stat-value" id="statTotal">0</p>
+                            <p class="stat-note" id="statTotalNote">All saved alerts</p>
+                        </div>
+                    </article>
+                    <article class="stat" style="--tone: 239,68,68">
+                        <div class="stat-icon"><svg class="icon"><use href="#i-eye-off"/></svg></div>
+                        <div class="stat-body">
+                            <p class="stat-label">Eye closures</p>
+                            <p class="stat-value" id="statEye">0</p>
+                            <p class="stat-note">High priority</p>
+                        </div>
+                    </article>
+                    <article class="stat" style="--tone: 245,158,11">
+                        <div class="stat-icon"><svg class="icon"><use href="#i-mouth"/></svg></div>
+                        <div class="stat-body">
+                            <p class="stat-label">Yawning alerts</p>
+                            <p class="stat-value" id="statYawn">0</p>
+                            <p class="stat-note">Medium priority</p>
+                        </div>
+                    </article>
+                    <article class="stat" style="--tone: 52,211,153">
+                        <div class="stat-icon"><svg class="icon"><use href="#i-clock"/></svg></div>
+                        <div class="stat-body">
+                            <p class="stat-label">Last alert</p>
+                            <p class="stat-value stat-text" id="statLast">None yet</p>
+                            <p class="stat-note" id="statLastNote">No alerts saved</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="grid-main">
+                    <section class="panel video-panel">
+                        <div class="panel-head">
+                            <h2>Live camera</h2>
+                            <span class="live-tag js-live-tag">Offline</span>
+                        </div>
+                        <div class="video-frame">
+                            <img id="videoFeedDash" alt="Live camera feed" hidden>
+                            <div id="videoEmptyDash" class="video-empty">
+                                <svg class="icon"><use href="#i-video"/></svg>
+                                <strong>Camera is off</strong>
+                                <span>Select Start detection to open the camera.</span>
+                            </div>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-primary js-start" type="button"><svg class="icon"><use href="#i-play"/></svg>Start detection</button>
+                            <button class="btn btn-danger js-stop" type="button" disabled><svg class="icon"><use href="#i-square"/></svg>Stop detection</button>
+                            <span class="message js-message" aria-live="polite"></span>
+                        </div>
+                    </section>
+
+                    <div class="side-stack">
+                        <section id="alertPanel" class="panel alert-panel" data-state="off" aria-live="polite">
+                            <div class="alert-icon"><svg class="icon"><use id="alertIcon" href="#i-power"/></svg></div>
+                            <div class="alert-copy">
+                                <h2 id="alertTitle">Monitoring off</h2>
+                                <p id="alertText">Start detection to begin live monitoring.</p>
+                            </div>
+                        </section>
+
+                        <section class="panel metrics">
+                            <div class="metric" id="earMetric">
+                                <div class="metric-head">
+                                    <span class="metric-name"><svg class="icon"><use href="#i-eye"/></svg>Eye aspect ratio</span>
+                                    <strong class="metric-value" id="earValue">0.00</strong>
+                                </div>
+                                <div class="gauge"><div class="gauge-fill" id="earFill"></div><div class="gauge-mark" id="earMark"></div></div>
+                                <div class="frames">
+                                    <span>Eyes closed frames</span>
+                                    <span><b id="eyeFrames">0</b> / <span class="js-frame-limit">18</span></span>
+                                </div>
+                                <div class="progress"><div class="bar" id="eyeBar"></div></div>
+                            </div>
+                            <div class="metric" id="marMetric">
+                                <div class="metric-head">
+                                    <span class="metric-name"><svg class="icon"><use href="#i-mouth"/></svg>Mouth aspect ratio</span>
+                                    <strong class="metric-value" id="marValue">0.00</strong>
+                                </div>
+                                <div class="gauge"><div class="gauge-fill" id="marFill"></div><div class="gauge-mark" id="marMark"></div></div>
+                                <div class="frames">
+                                    <span>Yawning frames</span>
+                                    <span><b id="yawnFrames">0</b> / <span class="js-frame-limit">18</span></span>
+                                </div>
+                                <div class="progress"><div class="bar" id="yawnBar"></div></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="grid-bottom">
+                    <section class="panel">
+                        <div class="panel-head">
+                            <h2>Live EAR and MAR</h2>
+                            <div class="legend"><span class="key key-ear">EAR</span><span class="key key-mar">MAR</span></div>
+                        </div>
+                        <svg id="trendMini" class="chart" viewBox="0 0 640 240" role="img" aria-label="Live EAR and MAR trend"></svg>
+                    </section>
+                    <section class="panel">
+                        <div class="panel-head">
+                            <h2>Recent alerts</h2>
+                            <a class="link" href="#history">View all</a>
+                        </div>
+                        <div id="recentRows" class="rows compact"></div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- History -->
+            <section id="view-history" class="view" hidden>
+                <section class="panel">
+                    <div class="panel-head">
+                        <div class="tabs" role="tablist" aria-label="History views">
+                            <button class="tab" role="tab" id="tabLog" aria-selected="true" aria-controls="panelLog" data-tab="log" type="button">
+                                <svg class="icon"><use href="#i-list"/></svg>History log
+                            </button>
+                            <button class="tab" role="tab" id="tabAnalytics" aria-selected="false" aria-controls="panelAnalytics" data-tab="analytics" type="button">
+                                <svg class="icon"><use href="#i-chart"/></svg>Analytics graph
+                            </button>
+                        </div>
+                        <button id="refreshBtn" class="btn btn-ghost" type="button"><svg class="icon"><use href="#i-refresh"/></svg>Refresh</button>
+                    </div>
+
+                    <div id="panelLog" role="tabpanel" aria-labelledby="tabLog">
+                        <div class="chips" id="filterChips" role="group" aria-label="Filter by alert type">
+                            <button class="chip" type="button" data-filter="ALL" aria-pressed="true">All <b id="chipAll">0</b></button>
+                            <button class="chip chip-eye" type="button" data-filter="EYE_CLOSURE" aria-pressed="false">Eye closure <b id="chipEye">0</b></button>
+                            <button class="chip chip-yawn" type="button" data-filter="YAWNING" aria-pressed="false">Yawning <b id="chipYawn">0</b></button>
+                            <button class="chip chip-combo" type="button" data-filter="DROWSINESS" aria-pressed="false">Combined <b id="chipCombo">0</b></button>
+                        </div>
+                        <div id="eventRows" class="rows"></div>
+                        <div class="rows-foot">
+                            <button id="moreBtn" class="btn btn-ghost" type="button" hidden>Show more</button>
+                            <p id="lastUpdated" class="muted"></p>
+                        </div>
+                    </div>
+
+                    <div id="panelAnalytics" role="tabpanel" aria-labelledby="tabAnalytics" hidden>
+                        <div class="chart-card">
+                            <div class="panel-head">
+                                <h3>EAR and MAR trend</h3>
+                                <div class="legend"><span class="key key-ear">EAR</span><span class="key key-mar">MAR</span><span class="key key-thr">Threshold</span></div>
+                            </div>
+                            <svg id="trendChart" class="chart" viewBox="0 0 640 240" role="img" aria-label="EAR and MAR trend over the last 90 seconds"></svg>
+                        </div>
+                        <div class="analytics-grid">
+                            <div class="chart-card">
+                                <h3>Alerts by type</h3>
+                                <div id="typeBars" class="type-bars"></div>
+                            </div>
+                            <div class="chart-card">
+                                <div class="panel-head">
+                                    <h3>Alerts in the last 12 hours</h3>
+                                    <div class="legend"><span class="key key-eye">Eye</span><span class="key key-yawn">Yawn</span><span class="key key-combo">Combined</span></div>
+                                </div>
+                                <svg id="hourChart" class="chart chart-short" viewBox="0 0 400 160" role="img" aria-label="Alerts per hour"></svg>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Live stream -->
+            <section id="view-live" class="view" hidden>
+                <section class="panel">
+                    <div class="panel-head">
+                        <h2>Live stream</h2>
+                        <span class="live-tag js-live-tag">Offline</span>
+                    </div>
+                    <div class="video-frame video-large">
+                        <img id="videoFeedLive" alt="Live camera feed" hidden>
+                        <div id="videoEmptyLive" class="video-empty">
+                            <svg class="icon"><use href="#i-video"/></svg>
+                            <strong>Camera is off</strong>
+                            <span>Select Start detection to open the camera.</span>
+                        </div>
+                        <div class="hud" id="hud" hidden>
+                            <span class="hud-chip"><svg class="icon"><use href="#i-eye"/></svg>EAR <b id="hudEar">0.00</b></span>
+                            <span class="hud-chip"><svg class="icon"><use href="#i-mouth"/></svg>MAR <b id="hudMar">0.00</b></span>
+                            <span class="hud-chip hud-state" id="hudState">Alert</span>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <button class="btn btn-primary js-start" type="button"><svg class="icon"><use href="#i-play"/></svg>Start detection</button>
+                        <button class="btn btn-danger js-stop" type="button" disabled><svg class="icon"><use href="#i-square"/></svg>Stop detection</button>
+                        <span class="message js-message" aria-live="polite"></span>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Settings -->
+            <section id="view-settings" class="view" hidden>
+                <div class="settings-grid">
+                    <section class="panel">
+                        <h2>Detection thresholds</h2>
+                        <p class="muted">These values are read from the server. Edit them in application.properties and restart the app.</p>
+                        <div class="setting-list">
+                            <div class="setting"><span><svg class="icon"><use href="#i-eye"/></svg>Eye closure below EAR</span><strong id="setEar">0.25</strong></div>
+                            <div class="setting"><span><svg class="icon"><use href="#i-mouth"/></svg>Yawning above MAR</span><strong id="setMar">0.70</strong></div>
+                            <div class="setting"><span><svg class="icon"><use href="#i-gauge"/></svg>Frames before an alert</span><strong id="setFrames">18</strong></div>
+                        </div>
+                        <pre class="code">detection.ear-threshold=0.25
+detection.mar-threshold=0.70
+detection.frame-threshold=18</pre>
+                    </section>
+
+                    <section class="panel">
+                        <h2>Alarm sound</h2>
+                        <p class="muted">Plays a beep in this browser while an alert is active.</p>
+                        <label class="switch-row">
+                            <span>Sound enabled</span>
+                            <span class="switch"><input type="checkbox" id="soundSwitch" checked><span class="slider"></span></span>
+                        </label>
+
+                        <h2 class="spaced">API endpoints</h2>
+                        <ul class="endpoints">
+                            <li><code>POST</code><span>/api/detection/start</span></li>
+                            <li><code>POST</code><span>/api/detection/stop</span></li>
+                            <li><code>GET</code><span>/api/status</span></li>
+                            <li><code>GET</code><span>/api/video/stream</span></li>
+                            <li><code>GET</code><span>/api/events</span></li>
+                        </ul>
+                    </section>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<script src="js/app.js?v=2"></script>
+</body>
+</html>
