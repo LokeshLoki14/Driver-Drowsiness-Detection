@@ -207,7 +207,7 @@ Example:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/drowsiness_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
-spring.datasource.username=${DB_USERNAME:root}
+spring.datasource.username=${DB_USERNAME}
 spring.datasource.password=${DB_PASSWORD}
 ```
 
