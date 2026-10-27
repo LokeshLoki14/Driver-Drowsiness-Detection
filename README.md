@@ -308,7 +308,7 @@ These are example project settings. Adjust thresholds and model paths according 
 **Lokesh R**
 Computer Science and Engineering
 
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/LokeshLoki14
 
 LinkedIn: Add your LinkedIn profile URL here.
 
