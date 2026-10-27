@@ -285,7 +285,7 @@ Example:
 ```properties
 detection.camera-index=0
 detection.ear-threshold=0.25
-detection.mar-threshold=1.10
+detection.mar-threshold=0.80
 detection.frame-threshold=18
 detection.face-model-path=models/haarcascade_frontalface_default.xml
 detection.landmark-model-path=models/lbfmodel.yaml
